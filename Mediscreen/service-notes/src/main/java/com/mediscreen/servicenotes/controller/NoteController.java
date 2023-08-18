@@ -24,12 +24,12 @@ public class NoteController {
         return noteRepository.findAll();
     }
 
-    @GetMapping(value = "/notes/{id}")
+    @GetMapping(value = "/notes/{patId}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public List<Note> getAllNoteOfPatient(@PathVariable String id) {
+    public List<Note> getAllNoteOfPatient(@PathVariable String patId) {
         //        return new ResponseEntity<>(noteList, HttpStatus.OK);
-        return noteRepository.findNoteByPatId(id);
+        return noteRepository.findBySpecificPatId(patId);
     }
 
 

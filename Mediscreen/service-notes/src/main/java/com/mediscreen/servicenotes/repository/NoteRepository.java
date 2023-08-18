@@ -11,6 +11,8 @@ import java.util.List;
 public interface NoteRepository extends MongoRepository<Note, String> {
 
 //    @Query("{ 'patId' : ?0 }")
-    @Query("{ 'patId' : { $eq: ?0 }}")
-    List<Note> findNoteByPatId(String patId);
+//    @Query("{ 'patId' : { $eq: ?0 }}")
+//    List<Note> findNoteByPatId(String patId);
+    @Query("{'patId' : ?0 }")
+    List<Note> findBySpecificPatId(String patid);
 }
