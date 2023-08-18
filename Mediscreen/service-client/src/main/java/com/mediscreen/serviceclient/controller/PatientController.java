@@ -38,10 +38,11 @@ public class PatientController {
     public ModelAndView getPatient(ModelMap model, @PathVariable long id) {
         Patient patient = microservicePatientProxy.getPatient(id);
         //List<Note> notesList = microserviceNotesProxy.getListHistoryNoteOfPatient(id);
-        List<Note> notesList =microserviceNotesProxy.getListHistoryNoteOfPatient();
-
+//        List<Note> notesList =microserviceNotesProxy.getListHistoryNoteOfPatient(Long.toString(id));
+        List<Note> notesList =microserviceNotesProxy.getListHistoryNoteOfPatient(Long.toString(id));
         model.addAttribute("patient", patient);
         model.addAttribute("notes", notesList);
+        model.addAttribute("newNote", new Note(Long.toString(patient.getId()), patient.getFamily(), ""));
         return new ModelAndView("patient", model);
     }
 
@@ -82,6 +83,20 @@ public class PatientController {
             model.addAttribute("message", "Le patient à été mis à jour");
         }
         return new ModelAndView("redirect:/list", model);
+    }
+
+    @PostMapping(value = "/note/save")
+    public ModelAndView saveNotePatient(@Valid Note newNote, BindingResult result, ModelMap model) {
+        Patient patient = microservicePatientProxy.getPatient( Long.parseLong(newNote.getPatId()));
+        List<Note> notesList = microserviceNotesProxy.getListHistoryNoteOfPatient(newNote.getPatId());
+
+        microserviceNotesProxy.saveNote(newNote);
+
+        model.addAttribute("patient", patient);
+        model.addAttribute("notes", notesList);
+        model.addAttribute("newNote", new Note(Long.toString(patient.getId()), patient.getFamily(), ""));
+        model.addAttribute("message", "La note à été ajouté au patient");
+        return new ModelAndView("redirect:/patient/"+patient.getId(), model);
     }
 
     @GetMapping(value = "/patient/delete/{id}")
