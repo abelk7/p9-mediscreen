@@ -44,7 +44,7 @@ public class PatientServiceTest {
         Patient patient = new Patient();
         patient.setFamily("Rho");
         patient.setGiven("Jax");
-        patient.setDob(LocalDate.of(1999,12,25));
+        patient.setDob(LocalDate.of(1999, 12, 25));
         patient.setSex('M');
         patient.setAddress("22 Rue South-Bisto");
         patient.setPhone("562-456-654");
@@ -52,7 +52,7 @@ public class PatientServiceTest {
         Patient patient2 = new Patient();
         patient2.setFamily("Almiya");
         patient2.setGiven("Nadine");
-        patient2.setDob(LocalDate.of(1987,3,25));
+        patient2.setDob(LocalDate.of(1987, 3, 25));
         patient2.setSex('F');
         patient2.setAddress("22 Rue South-Bisto");
         patient2.setPhone("562-456-654");
@@ -75,7 +75,7 @@ public class PatientServiceTest {
         Patient patient = new Patient();
         patient.setFamily("Rho");
         patient.setGiven("Jax");
-        patient.setDob(LocalDate.of(1999,12,25));
+        patient.setDob(LocalDate.of(1999, 12, 25));
         patient.setSex('M');
         patient.setAddress("22 Rue Henri Miller");
         patient.setPhone("846-456-652");
@@ -93,7 +93,7 @@ public class PatientServiceTest {
         Patient patient = new Patient();
         patient.setFamily("Almiya");
         patient.setGiven("Nadine");
-        patient.setDob(LocalDate.of(1987,3,25));
+        patient.setDob(LocalDate.of(1987, 3, 25));
         patient.setSex('F');
         patient.setAddress("22 Rue South-Bisto");
         patient.setPhone("562-456-654");

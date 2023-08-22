@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
 @RunWith(JUnitPlatform.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PatientServiceTestIT {
@@ -41,7 +42,7 @@ public class PatientServiceTestIT {
         Patient patient = new Patient();
         patient.setFamily("Almiya");
         patient.setGiven("Nadine");
-        patient.setDob(LocalDate.of(1987,3,25));
+        patient.setDob(LocalDate.of(1987, 3, 25));
         patient.setSex('F');
         patient.setAddress("22 Rue South-Bisto");
         patient.setPhone("562-456-654");
