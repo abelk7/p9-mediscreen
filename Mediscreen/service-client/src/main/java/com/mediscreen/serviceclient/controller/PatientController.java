@@ -37,8 +37,6 @@ public class PatientController {
     @GetMapping(value = "/patient/{id}")
     public ModelAndView getPatient(ModelMap model, @PathVariable long id) {
         Patient patient = microservicePatientProxy.getPatient(id);
-        //List<Note> notesList = microserviceNotesProxy.getListHistoryNoteOfPatient(id);
-//        List<Note> notesList =microserviceNotesProxy.getListHistoryNoteOfPatient(Long.toString(id));
         List<Note> notesList =microserviceNotesProxy.getListHistoryNoteOfPatient(Long.toString(id));
         model.addAttribute("patient", patient);
         model.addAttribute("notes", notesList);
