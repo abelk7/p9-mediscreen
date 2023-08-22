@@ -40,7 +40,7 @@ public class PatientController {
         List<Note> notesList =microserviceNotesProxy.getListHistoryNoteOfPatient(Long.toString(id));
         model.addAttribute("patient", patient);
         model.addAttribute("notes", notesList);
-        model.addAttribute("newNote", new Note(Long.toString(patient.getId()), patient.getFamily(), ""));
+        model.addAttribute("newNote", new Note(null ,Long.toString(patient.getId()), patient.getFamily(), ""));
         return new ModelAndView("patient", model);
     }
 
@@ -92,10 +92,43 @@ public class PatientController {
 
         model.addAttribute("patient", patient);
         model.addAttribute("notes", notesList);
-        model.addAttribute("newNote", new Note(Long.toString(patient.getId()), patient.getFamily(), ""));
-        model.addAttribute("message", "La note à été ajouté au patient");
+        model.addAttribute("newNote", new Note(null,Long.toString(patient.getId()), patient.getFamily(), ""));
+        if(newNote.getId() == null) {
+            model.addAttribute("message", "La note à été ajouté au patient");
+        }else {
+            model.addAttribute("message", "La note à été mis à jour");
+        }
+
         return new ModelAndView("redirect:/patient/"+patient.getId(), model);
     }
+
+    //TODO : Modifier Note
+    @GetMapping(value = "/patient/note/{id}")
+    public ModelAndView showFormUpdateNotePatient(ModelMap model, @PathVariable String id) {
+        Note note = microserviceNotesProxy.findNoteById(id);
+        model.addAttribute("note", note);
+        return new ModelAndView("patient-note", model);
+    }
+
+//    @PostMapping(value = "/note/update")
+//    public ModelAndView updateNotePatient(@Valid Note note, BindingResult result, ModelMap model) {
+//        Patient patient = microservicePatientProxy.getPatient( Long.parseLong(note.getPatId()));
+//        List<Note> notesList = microserviceNotesProxy.getListHistoryNoteOfPatient(note.getPatId());
+//        Note noteFound = microserviceNotesProxy.findNoteById(note.getId());
+//
+//        microserviceNotesProxy.saveNote(newNote);
+//
+//        model.addAttribute("patient", patient);
+//        model.addAttribute("notes", notesList);
+//        model.addAttribute("newNote", new Note(null,Long.toString(patient.getId()), patient.getFamily(), ""));
+//        model.addAttribute("message", "La note à été ajouté au patient");
+//        return new ModelAndView("redirect:/patient/"+patient.getId(), model);
+//    }
+
+//    @PutMapping(value = "/note/{id}")
+//    public ModelAndView updateNotePatient(@Valid Note note, BindingResult result, ModelMap model) {
+//
+//    }
 
     @GetMapping(value = "/patient/delete/{id}")
     public ModelAndView deletePatient(@PathVariable long id, ModelMap model) {

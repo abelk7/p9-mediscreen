@@ -18,6 +18,7 @@ import java.util.List;
 public class NoteController {
 
     private final INoteService noteService;
+    private NoteRepository noteRepository;
 
     @GetMapping(value = "/notes/")
     @ResponseStatus(HttpStatus.OK)
@@ -34,17 +35,13 @@ public class NoteController {
         return noteService.findBySpecificPatId(patId);
     }
 
+    @GetMapping(value = "/note/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public Note getSpecificNote(@PathVariable String id){
+        return noteService.findNoteById(id);
+    }
 
-//    @PostMapping(value = "/patHistory/add")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @ResponseBody
-//    public Note postNote(@RequestBody Note note) {
-//        if(!StringUtils.hasLength(note.getNote())) {
-//            throw new NoteEmptyException("Impossible d'enregistrer une note vide.");
-//        }
-//        Note note1 = noteRepository.save(note);
-//        return note1;
-//    }
 
     @PostMapping(value = "/patHistory/add")
     @ResponseStatus(HttpStatus.CREATED)
@@ -55,30 +52,16 @@ public class NoteController {
                 throw new NoteEmptyException("Impossible d'enregistrer une note vide.");
             }
             Note note1 = noteService.save(note);
-            return new ResponseEntity<>(note1, HttpStatus.CREATED);
+            if(note.getId() == null) {
+                return new ResponseEntity<>(note1, HttpStatus.CREATED);
+            } else {
+                return new ResponseEntity<>(note1, HttpStatus.OK);
+            }
+
         } catch (NoteEmptyException e) {
             System.out.println(e.getMessage());
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-
-
     }
-
-//        @RequestMapping(
-//            path = "/patHistory/add",
-//            method = RequestMethod.POST,
-//            consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE,
-//            produces = {
-//                    MediaType.APPLICATION_ATOM_XML_VALUE,
-//                    MediaType.APPLICATION_JSON_VALUE
-//            })
-//    public Note postNote2(Note note) {
-//        System.out.println("coucou");
-//        System.out.println(note.toString());
-//        Note note1 = noteRepository.save(note);
-//        System.out.println(note1);
-//        return note1;
-//    }
-
 
 }
