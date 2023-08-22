@@ -3,6 +3,8 @@ package com.mediscreen.servicenotes.controller;
 import com.mediscreen.servicenotes.exception.NoteEmptyException;
 import com.mediscreen.servicenotes.model.Note;
 import com.mediscreen.servicenotes.repository.NoteRepository;
+import com.mediscreen.servicenotes.service.INoteService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,17 +13,17 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
 public class NoteController {
 
-    @Autowired
-    private NoteRepository noteRepository;
+    private final INoteService noteService;
 
     @GetMapping(value = "/notes/")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<Note> getNotes() {
-        return noteRepository.findAll();
+        return noteService.findAll();
     }
 
     @GetMapping(value = "/notes/{patId}")
@@ -29,7 +31,7 @@ public class NoteController {
     @ResponseBody
     public List<Note> getAllNoteOfPatient(@PathVariable String patId) {
         //        return new ResponseEntity<>(noteList, HttpStatus.OK);
-        return noteRepository.findBySpecificPatId(patId);
+        return noteService.findBySpecificPatId(patId);
     }
 
 
@@ -52,7 +54,7 @@ public class NoteController {
             if(!StringUtils.hasLength(note.getNote())) {
                 throw new NoteEmptyException("Impossible d'enregistrer une note vide.");
             }
-            Note note1 = noteRepository.save(note);
+            Note note1 = noteService.save(note);
             return new ResponseEntity<>(note1, HttpStatus.CREATED);
         } catch (NoteEmptyException e) {
             System.out.println(e.getMessage());
