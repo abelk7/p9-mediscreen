@@ -6,6 +6,8 @@ import com.mediscreen.servicepatient.exception.UnableToAddNewPatientException;
 import com.mediscreen.servicepatient.model.Patient;
 import com.mediscreen.servicepatient.service.IPatientService;
 import com.mediscreen.servicepatient.service.impl.PatientService;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -17,10 +19,12 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @RestController
 public class PatientController {
+
     @Autowired
-    private PatientService patientService;
+    PatientService patientService;
 
     @GetMapping(value =  {"/patient/"})
     @ResponseStatus(HttpStatus.OK)
@@ -34,8 +38,8 @@ public class PatientController {
     @ResponseBody
     public Patient getPatient(@PathVariable long id) {
         Optional<Patient> patient = patientService.findById(id);
-        if(patient.isEmpty()) {
-            throw new PatientNotFoundException("Le patient avec l'id " + id + "n'existe pas");
+        if(!patient.isPresent()) {
+            throw new PatientNotFoundException("Le patient avec l'id " + id + " n'existe pas");
         }
         return patient.get();
     }
@@ -57,8 +61,8 @@ public class PatientController {
     @ResponseBody
     public Patient updatePatient(@PathVariable long id, @RequestBody Patient patientNewValues) {
         Optional<Patient> patientFound = patientService.findById(id);
-        if(patientFound.isEmpty()) {
-            throw new PatientNotFoundException("Le patient avec l'id " + id + "n'existe pas");
+        if(!patientFound.isPresent()) {
+            throw new PatientNotFoundException("Le patient avec l'id " + id + " n'existe pas");
         }
         Patient patientToUpdate = patientFound.get();
         patientToUpdate.setFamily(patientNewValues.getFamily());
@@ -68,9 +72,9 @@ public class PatientController {
         patientToUpdate.setDob(patientNewValues.getDob());
         patientToUpdate.setAddress(patientNewValues.getAddress());
 
-        patientService.save(patientToUpdate);
+        Patient patientUpdated = patientService.save(patientToUpdate);
 
-        return patientToUpdate;
+        return patientUpdated;
     }
 
     @DeleteMapping(value = "/patient/{id}")
@@ -78,8 +82,8 @@ public class PatientController {
     @ResponseBody
     public void deletePatient(@PathVariable long id) {
         Optional<Patient> patientFound = patientService.findById(id);
-        if(patientFound.isEmpty()) {
-            throw new PatientNotFoundException("Le patient avec l'id " + id + "n'existe pas");
+        if(!patientFound.isPresent()) {
+            throw new PatientNotFoundException("Le patient avec l'id " + id + " n'existe pas");
         }
         patientService.delete(id);
     }

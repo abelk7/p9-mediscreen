@@ -13,24 +13,19 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class PatientService implements IPatientService {
-
     private final PatientDao patientDao;
-
     @Override
     public List<Patient> findAll() {
         return patientDao.findAll();
     }
-
     @Override
     public Optional<Patient> findById(Long id) {
         return patientDao.findById(id);
     }
-
     @Override
     public Patient save(Patient patient) {
         return patientDao.save(patient);
     }
-
     @Override
     public void delete(Long id) {
         patientDao.deleteById(id);
