@@ -11,6 +11,7 @@ import org.springframework.data.annotation.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Note {
+    private String id;
     private String patId;
     private String patient;
     private String note;

@@ -22,4 +22,7 @@ public interface MicroserviceNotesProxy {
 
     @PostMapping(value = "/patHistory/add")
     Note saveNote(@RequestBody Note note);
+
+    @GetMapping(value = "/note/{id}")
+    Note findNoteById(@PathVariable String id);
 }
