@@ -135,7 +135,8 @@
                     </div>
                     <div class="col-2" style="margin-top:35px;">
                         <a class="btn btn-primary btn-sm"
-                           th:href="@{/patient/note/{id} (id=${note.id})}">Modifier</a>
+                           th:if="${#authentication.getPrincipal().getUsername() == note.docteur}"
+                           th:href="@{/patient/note/{id} (id=${note.id})}" >Modifier</a>
                     </div>
                 </div>
             </div>
@@ -146,6 +147,7 @@
                         <textarea th:field="*{note}" cols="109" rows="5" Placeholder="Veuillez saisir votre note ici..."></textarea>
                         <input type="hidden" th:field="*{patId}" th:value="${newNote.patId}">
                         <input type="hidden" th:field="*{patient}" th:value="${newNote.patient}">
+                        <input type="hidden" th:field="*{docteur}" th:value="${#authentication.getPrincipal().getUsername()}">
 
                         <div class="row justify-content-center mt-3">
                             <button type="submit" class="btn btn-success"> Enregistrer</button>

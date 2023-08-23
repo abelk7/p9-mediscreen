@@ -41,9 +41,9 @@ public class NoteServiceTest {
     @Test
     void test_findAllNotes() {
         List<Note> noteList = new ArrayList<>();
-        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1");
-        Note note2 = new Note("2", "1", "TestPatient1", "Test notes exemple...2");
-        Note note3 = new Note("3", "2", "TestPatient2", "Test notes exemple...3");
+        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1","docteur2");
+        Note note2 = new Note("2", "1", "TestPatient1", "Test notes exemple...2","docteur2");
+        Note note3 = new Note("3", "2", "TestPatient2", "Test notes exemple...3","docteur2");
 
         noteList.add(note1);
         noteList.add(note2);
@@ -62,8 +62,8 @@ public class NoteServiceTest {
     @Test
     void test_findBySpecificPatId() {
         List<Note> noteList = new ArrayList<>();
-        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1");
-        Note note2 = new Note("2", "1", "TestPatient1", "Test notes exemple...2");
+        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1","docteur2");
+        Note note2 = new Note("2", "1", "TestPatient1", "Test notes exemple...2","docteur2");
 
         noteList.add(note1);
         noteList.add(note2);
@@ -80,7 +80,7 @@ public class NoteServiceTest {
     @Order(3)
     @Test
     void test_findNoteById() {
-        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1");
+        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1", "docteur2");
 
         when(mongoOperations.findOne(any(Query.class), any())).thenReturn(note1);
 

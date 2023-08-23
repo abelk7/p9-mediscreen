@@ -48,7 +48,7 @@ public class NoteServiceTestIT {
     @Order(4)
     @Test
     void test_save() {
-        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1");
+        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1","docteur2");
         Note result = noteService.save(note1);
         assertThat(result).isNotNull();
     }
