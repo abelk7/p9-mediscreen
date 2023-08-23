@@ -73,7 +73,7 @@ public class NoteControllerTestIT {
     @Test
     @Order(4)
     void test_postNote() throws Exception {
-        Note note1 = new Note(null, "9", "TestPatient", "Test notes exemple...999");
+        Note note1 = new Note(null, "9", "TestPatient", "Test notes exemple...999", "docteur2");
         mockMvc
                 .perform(post("/patHistory/add")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -84,7 +84,7 @@ public class NoteControllerTestIT {
     @Test
     @Order(5)
     void test_postNote_shouldThrows_Exception_if_note_Empty() throws Exception {
-        Note note1 = new Note("1", "9", "TestPatient", "");
+        Note note1 = new Note("1", "9", "TestPatient", "","docteur2");
        MvcResult mvcResult = mockMvc
                 .perform(post("/patHistory/add")
                         .contentType(MediaType.APPLICATION_JSON)

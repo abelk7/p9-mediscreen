@@ -6,6 +6,8 @@ import com.mediscreen.serviceclient.model.Patient;
 import com.mediscreen.serviceclient.proxies.MicroserviceNotesProxy;
 import com.mediscreen.serviceclient.proxies.MicroservicePatientProxy;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +43,7 @@ public class PatientController {
         List<Note> notesList =microserviceNotesProxy.getListHistoryNoteOfPatient(Long.toString(id));
         model.addAttribute("patient", patient);
         model.addAttribute("notes", notesList);
-        model.addAttribute("newNote", new Note(null ,Long.toString(patient.getId()), patient.getFamily(), ""));
+        model.addAttribute("newNote", new Note(null ,Long.toString(patient.getId()), patient.getFamily(), "", "docteur1"));
         return new ModelAndView("patient", model);
     }
 
@@ -85,14 +88,16 @@ public class PatientController {
 
     @PostMapping(value = "/note/save")
     public ModelAndView saveNotePatient(@Valid Note newNote, BindingResult result, ModelMap model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Patient patient = microservicePatientProxy.getPatient( Long.parseLong(newNote.getPatId()));
         List<Note> notesList = microserviceNotesProxy.getListHistoryNoteOfPatient(newNote.getPatId());
 
+        newNote.setDocteur(auth.getName());
         Note note = microserviceNotesProxy.saveNote(newNote);
 
         model.addAttribute("patient", patient);
         model.addAttribute("notes", notesList);
-        model.addAttribute("newNote", new Note(null,Long.toString(patient.getId()), patient.getFamily(), ""));
+        model.addAttribute("newNote", new Note(null,Long.toString(patient.getId()), patient.getFamily(), "", auth.getName()));
         if(newNote.getId() == null) {
             model.addAttribute("message", "La note à été ajouté au patient");
         }else {

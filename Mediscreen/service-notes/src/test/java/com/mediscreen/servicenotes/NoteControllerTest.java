@@ -35,9 +35,9 @@ public class NoteControllerTest {
     @Order(1)
     void test_getNotes() {
         List<Note> noteList = new ArrayList<>();
-        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1");
-        Note note2 = new Note("4", "1", "TestPatient2", "Test notes exemple...2");
-        Note note3 = new Note("6", "2", "TestPatient3", "Test notes exemple...3");
+        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1", "docteur1");
+        Note note2 = new Note("4", "1", "TestPatient2", "Test notes exemple...2", "docteur1");
+        Note note3 = new Note("6", "2", "TestPatient3", "Test notes exemple...3", "docteur1");
 
         noteList.add(note1);
         noteList.add(note2);
@@ -55,8 +55,8 @@ public class NoteControllerTest {
     @Order(2)
     void test_getAllNoteOfPatient() {
         List<Note> noteList = new ArrayList<>();
-        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1");
-        Note note2 = new Note("2", "1", "TestPatient1", "Test notes exemple...2");
+        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1", "docteur1");
+        Note note2 = new Note("2", "1", "TestPatient1", "Test notes exemple...2", "docteur1");
 
         noteList.add(note1);
         noteList.add(note2);
@@ -73,7 +73,7 @@ public class NoteControllerTest {
     @Test
     @Order(3)
     void test_getSpecificNote() {
-        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1");
+        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1", "docteur1");
 
         when(noteService.findNoteById(anyString())).thenReturn(note1);
 
@@ -86,7 +86,7 @@ public class NoteControllerTest {
     @Test
     @Order(4)
     void test_postNote() {
-        Note note1 = new Note(null, "1", "TestPatient1", "Test notes exemple...1");
+        Note note1 = new Note(null, "1", "TestPatient1", "Test notes exemple...1", "docteur1");
 
         when(noteService.save(any(Note.class))).thenReturn(note1);
 
@@ -100,7 +100,7 @@ public class NoteControllerTest {
     @Test
     @Order(5)
     void test_updateNote() {
-        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1");
+        Note note1 = new Note("1", "1", "TestPatient1", "Test notes exemple...1", "docteur1");
 
         when(noteService.save(any(Note.class))).thenReturn(note1);
 
