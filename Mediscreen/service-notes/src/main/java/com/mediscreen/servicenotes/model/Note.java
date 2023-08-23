@@ -15,7 +15,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "notes")
 public class Note {
     @Id
-//    @Field("_id")
     private String id;
     private String patId;
     private String patient;

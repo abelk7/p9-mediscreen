@@ -88,7 +88,7 @@ public class PatientController {
         Patient patient = microservicePatientProxy.getPatient( Long.parseLong(newNote.getPatId()));
         List<Note> notesList = microserviceNotesProxy.getListHistoryNoteOfPatient(newNote.getPatId());
 
-        microserviceNotesProxy.saveNote(newNote);
+        Note note = microserviceNotesProxy.saveNote(newNote);
 
         model.addAttribute("patient", patient);
         model.addAttribute("notes", notesList);
