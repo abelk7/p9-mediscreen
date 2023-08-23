@@ -31,7 +31,6 @@ public class NoteController {
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public List<Note> getAllNoteOfPatient(@PathVariable String patId) {
-        //        return new ResponseEntity<>(noteList, HttpStatus.OK);
         return noteService.findBySpecificPatId(patId);
     }
 
@@ -47,20 +46,17 @@ public class NoteController {
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
     public ResponseEntity<?> postNote(@RequestBody Note note) {
-        try {
-            if(!StringUtils.hasLength(note.getNote())) {
-                throw new NoteEmptyException("Impossible d'enregistrer une note vide.");
-            }
-            Note note1 = noteService.save(note);
-            if(note.getId() == null) {
-                return new ResponseEntity<>(note1, HttpStatus.CREATED);
-            } else {
-                return new ResponseEntity<>(note1, HttpStatus.OK);
-            }
+        String noteId = note.getId();
 
-        } catch (NoteEmptyException e) {
-            System.out.println(e.getMessage());
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        if(!StringUtils.hasLength(note.getNote())) {
+            throw new NoteEmptyException("Impossible d'enregistrer une note vide.");
+        }
+
+        Note note1 = noteService.save(note);
+        if(noteId == null) {
+            return new ResponseEntity<>(note1, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(note1, HttpStatus.OK);
         }
     }
 

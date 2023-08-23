@@ -15,9 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class NoteService implements INoteService {
-
-    @Autowired
-    private MongoOperations mongoOperations;
+    private final MongoOperations mongoOperations;
     private final NoteRepository noteRepository;
     @Override
     public List<Note> findAll() {
@@ -31,7 +29,6 @@ public class NoteService implements INoteService {
 
     @Override
     public Note findNoteById(String id) {
-//        return noteRepository.findNoteById(id);
         return mongoOperations.findOne(
                 Query.query(Criteria.where("_id").is(id)),Note.class
         );
