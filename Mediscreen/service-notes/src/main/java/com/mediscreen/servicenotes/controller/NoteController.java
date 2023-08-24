@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -52,7 +55,10 @@ public class NoteController {
             throw new NoteEmptyException("Impossible d'enregistrer une note vide.");
         }
 
+        note.setDate(new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+
         Note note1 = noteService.save(note);
+
         if(noteId == null) {
             return new ResponseEntity<>(note1, HttpStatus.CREATED);
         } else {

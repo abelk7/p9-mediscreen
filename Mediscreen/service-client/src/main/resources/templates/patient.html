@@ -75,40 +75,6 @@
                                type="text">
                     </div>
                 </fieldset>
-
-
-                <!--                <div class="card">-->
-                <!--                    <h5 class="card-title">Historique des notes</h5>-->
-                <!--                    <div class="card-body" th:each="c:${notes}">-->
-                <!--                        <p th:value="${note.note}"></p>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-
-                <!--                <ul>-->
-                <!--                    <li th:each="note : ${notes}">-->
-                <!--                        <div th:text="${note.patId}"></div>-->
-                <!--                        <div th:text="${note.note}"></div>-->
-                <!--                    </li>-->
-                <!--                </ul>-->
-
-
-
-
-                    <!--                <div class="container mt-5">-->
-                    <!--                    <div class="row">-->
-                    <!--                        <div class="col-md-6">-->
-                    <!--                            <button id="toggleButton" type="button" class="btn btn-primary">Afficher/Masquer la Section</button>-->
-                    <!--                            <div class="mt-3" id="section" style="display: none;">-->
-                    <!--                                <h4>Section Affichée</h4>-->
-                    <!--                                <p>Ceci est le contenu de la section qui sera affichée/masquée.</p>-->
-                    <!--                            </div>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                </div>-->
-
-
-
-
             </form>
         </div>
 
@@ -126,14 +92,17 @@
                 </div>
             </div>
             <div id="section" style="display: none;">
-                <div class="row" th:each="note : ${notes}">
-                    <div class="card mt-4 col-10">
-                        <div class="card-body">
-                            <!--                                    <p class="card-text" th:text="${note.note}"></p>-->
-                            <pre class="card-text" th:text="${note.note}"></pre>
+                <div class="row mt-4" th:each="note : ${notes}">
+                    <div class="col-11">
+                        <span style="font-size:12px;font-style: italic;font-weight: 500;">Publié le </span>
+                        <span style="font-size:12px;font-style: italic;font-weight: 500;" th:text="${#temporals.format(note.date, 'dd/MM/yyyy HH:mm')}"></span>
+                        <div class="card">
+                            <div class="card-body">
+                                <pre class="card-text" th:text="${note.note}"></pre>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-2" style="margin-top:35px;">
+                    <div class="col-1" style="margin-top:35px;margin-left:-13px;">
                         <a class="btn btn-primary btn-sm"
                            th:if="${#authentication.getPrincipal().getUsername() == note.docteur}"
                            th:href="@{/patient/note/{id} (id=${note.id})}" >Modifier</a>
