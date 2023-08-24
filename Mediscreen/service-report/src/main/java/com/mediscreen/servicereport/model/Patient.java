@@ -1,4 +1,4 @@
-package com.mediscreen.serviceclient.model;
+package com.mediscreen.servicereport.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,24 +6,23 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "patients")
 public class Patient {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "Le nom du patient ne peut pas être vide.")
     private String lastName;
-    @NotEmpty(message = "Le prenom du patient ne peut pas être vide.")
     private String firstName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @NotNull(message = "La date de naissance du patient ne peut pas être vide")
     private LocalDate dob;
-    @NotNull(message = "La Sexe du patient ne peut pas être vide")
     private char sex;
     private String address;
     private String phone;

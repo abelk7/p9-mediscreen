@@ -65,8 +65,8 @@ public class PatientController {
             throw new PatientNotFoundException("Le patient avec l'id " + id + " n'existe pas");
         }
         Patient patientToUpdate = patientFound.get();
-        patientToUpdate.setFamily(patientNewValues.getFamily());
-        patientToUpdate.setGiven(patientNewValues.getGiven());
+        patientToUpdate.setLastName(patientNewValues.getLastName());
+        patientToUpdate.setFirstName(patientNewValues.getFirstName());
         patientToUpdate.setSex(patientNewValues.getSex());
         patientToUpdate.setPhone(patientNewValues.getPhone());
         patientToUpdate.setDob(patientNewValues.getDob());

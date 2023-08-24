@@ -19,8 +19,8 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String family;
-    private String given;
+    private String lastName;
+    private String firstName;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dob;
     private char sex;
