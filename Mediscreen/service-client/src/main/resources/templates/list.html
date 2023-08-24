@@ -32,16 +32,16 @@
                 <thead>
                 <tr>
                     <th>ID</th>
-                    <th>FAMILY</th>
-                    <th>GIVEN</th>
+                    <th>LAST NAME</th>
+                    <th>FIRST NAME</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="p:${listPatients}">
                     <td th:text="${p.id}"></td>
-                    <td th:text="${p.family}"></td>
-                    <td th:text="${p.given}"></td>
+                    <td th:text="${p.lastName}"></td>
+                    <td th:text="${p.firstName}"></td>
                     <td>
                         <a class="btn btn-primary btn-sm"
                            th:href="@{/patient/{id} (id=${p.id})}">Detail</a>

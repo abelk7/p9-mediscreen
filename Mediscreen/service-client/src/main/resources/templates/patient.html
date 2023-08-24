@@ -44,13 +44,13 @@
             <form th:object="${patient}">
                 <fieldset disabled>
                     <div class="mb-3">
-                        <label class="form-label" for="disabledTextInputNom">Family</label>
-                        <input class="form-control" id="disabledTextInputNom" th:value="${patient.family}"
+                        <label class="form-label" for="disabledTextInputNom">Last Name</label>
+                        <input class="form-control" id="disabledTextInputNom" th:value="${patient.lastName}"
                                type="text">
                     </div>
                     <div class="mb-3">
-                        <label class="form-label" for="disabledTextInputPrenom">Given</label>
-                        <input class="form-control" id="disabledTextInputPrenom" th:value="${patient.given}"
+                        <label class="form-label" for="disabledTextInputPrenom">First Name</label>
+                        <input class="form-control" id="disabledTextInputPrenom" th:value="${patient.firstName}"
                                type="text">
                     </div>
                     <div class="mb-3">
@@ -61,7 +61,7 @@
                     <div class="mb-3">
                         <label class="form-label" for="disabledTextInputGenre">Sex</label>
                         <input class="form-control" id="disabledTextInputGenre"
-                               th:value="${patient.sex} == 'M' ? 'Homme' : 'Femme'"
+                               th:value="${patient.sex} == 'M' ? 'Male' : 'Female'"
                                type="text">
                     </div>
                     <div class="mb-3">

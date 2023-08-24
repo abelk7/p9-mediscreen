@@ -29,16 +29,16 @@
             <form method="POST" th:action="@{/patient/save}" th:object="${patient}">
                 <input th:field="*{id}" th:value="${patient.id}" type="hidden"/>
                 <div class="mb-3">
-                    <label class="form-label" for="disabledTextInputNom">Family</label>
-                    <input class="form-control" id="disabledTextInputNom" th:field="*{family}" th:value="${patient.family}"
+                    <label class="form-label" for="disabledTextInputNom">LastName</label>
+                    <input class="form-control" id="disabledTextInputNom" th:field="*{lastName}" th:value="${patient.lastName}"
                            type="text">
-                    <p th:errorclass="error" th:errors="*{family}" th:if="${#fields.hasErrors('family')}"></p>
+                    <p th:errorclass="error" th:errors="*{lastName}" th:if="${#fields.hasErrors('lastName')}"></p>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="disabledTextInputPrenom">Given</label>
-                    <input class="form-control" id="disabledTextInputPrenom" th:field="*{given}"
-                           th:value="${patient.given}" type="text">
-                    <p th:errorclass="error" th:errors="*{given}" th:if="${#fields.hasErrors('given')}"></p>
+                    <label class="form-label" for="disabledTextInputPrenom">FirstName</label>
+                    <input class="form-control" id="disabledTextInputPrenom" th:field="*{firstName}"
+                           th:value="${patient.firstName}" type="text">
+                    <p th:errorclass="error" th:errors="*{firstName}" th:if="${#fields.hasErrors('firstName')}"></p>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="disabledTextInputDateNaissance">Date of births</label>

@@ -43,7 +43,7 @@ public class PatientController {
         List<Note> notesList =microserviceNotesProxy.getListHistoryNoteOfPatient(Long.toString(id));
         model.addAttribute("patient", patient);
         model.addAttribute("notes", notesList);
-        model.addAttribute("newNote", new Note(null ,Long.toString(patient.getId()), patient.getFamily(), "", "docteur1"));
+        model.addAttribute("newNote", new Note(null ,Long.toString(patient.getId()), patient.getLastName(), "", "docteur1"));
         return new ModelAndView("patient", model);
     }
 
@@ -97,7 +97,7 @@ public class PatientController {
 
         model.addAttribute("patient", patient);
         model.addAttribute("notes", notesList);
-        model.addAttribute("newNote", new Note(null,Long.toString(patient.getId()), patient.getFamily(), "", auth.getName()));
+        model.addAttribute("newNote", new Note(null,Long.toString(patient.getId()), patient.getLastName(), "", auth.getName()));
         if(newNote.getId() == null) {
             model.addAttribute("message", "La note à été ajouté au patient");
         }else {
