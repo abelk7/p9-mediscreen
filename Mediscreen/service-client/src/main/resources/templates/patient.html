@@ -25,12 +25,6 @@
             <div>
                 <a class="btn btn-primary" th:href="@{/}">Retour</a>
             </div>
-
-<!--            <div class="mb-3 mt-2">-->
-<!--                -->
-<!--                &lt;!&ndash;                    <a class="btn btn-primary" th:href="@{/patient/note/{id} (id=${patient.id})}">Ajouter une note</a>&ndash;&gt;-->
-
-<!--            </div>-->
             <div>
                 <p class="mt-2 font-weight-bold"><strong>Détail du patient</strong></p>
             </div>
@@ -38,7 +32,6 @@
                 <a class="btn btn-primary"
                    th:href="@{/patient/update/{id} (id=${patient.id})}">Modifier</a>
             </div>
-
         </div>
         <div class="card-body" style="width:50%;margin:auto;">
             <form th:object="${patient}">
@@ -81,14 +74,18 @@
         <div class="card-footer mt-5">
             <div class="d-flex justify-content-between">
                 <div>
-                    <button class="btn btn-primary" id="toggleButton" type="button">Afficher/Masquer
-                    </button>
-                </div>
-                <div>
                     <p class="mt-2 font-weight-bold" style="margin-left:-50px;"><strong>Notes</strong></p>
+                    <button class="btn btn-primary" id="toggleButton" type="button">Afficher/Masquer</button>
+                    <button class="btn btn-success" id="ajouterNoteButton" type="button">Ajouter</button>
                 </div>
                 <div>
-                    <button class="btn btn-success" id="ajouterNoteButton" type="button">Ajouter</button>
+
+                </div>
+                <div>
+                    <form action="#" th:action="@{/probadiabete/patId}" th:object="${patient}" method="post">
+                        <input type="hidden" th:field="*{id}" th:value="${patient.getId()}">
+                        <button style="margin-top:10px" class="btn btn-dark" type="submit">déterminer probabilité diabète</button>
+                    </form>
                 </div>
             </div>
             <div id="section" style="display: none;">

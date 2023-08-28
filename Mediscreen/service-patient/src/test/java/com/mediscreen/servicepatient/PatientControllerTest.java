@@ -109,7 +109,7 @@ public class PatientControllerTest {
         Patient result = patientController.updatePatient(1L, patient1);
 
         assertThat(result).isNotNull();
-        assertThat(result.getFamily()).isEqualTo(patient1.getFamily());
+        assertThat(result.getLastName()).isEqualTo(patient1.getLastName());
     }
 
     @Test

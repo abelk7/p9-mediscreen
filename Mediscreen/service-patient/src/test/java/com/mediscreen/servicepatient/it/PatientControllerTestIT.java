@@ -58,8 +58,8 @@ public class PatientControllerTestIT {
                 .perform(get("/patient/{id}", 1))
                 .andDo(print())
                 .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.family").value("TestNone"))
-                .andExpect(jsonPath("$.given").value("Test"))
+                .andExpect(jsonPath("$.lastName").value("TestNone"))
+                .andExpect(jsonPath("$.firstName").value("Test"))
                 .andExpect(status().isOk());
     }
 
