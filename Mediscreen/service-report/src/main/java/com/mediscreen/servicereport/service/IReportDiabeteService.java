@@ -9,8 +9,8 @@ public interface IReportDiabeteService {
 
     Patient getPatientByPatId(String patId);
     Patient getPatientByFamilyName(String familyName);
-    Map<String, Integer> getOccurenceOfDechancheur(String patId);
+    Map<String, Integer> getOccurenceOfDeclencheur(String patId);
     String determineRiskLevel (Map<String, Integer> mapDeclencheurs, Patient patient);
-
     String generateReport(String riskLevel, Patient patient);
+    int ageOfPatient(Patient patient);
 }

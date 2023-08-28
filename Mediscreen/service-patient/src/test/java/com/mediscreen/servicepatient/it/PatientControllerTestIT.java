@@ -88,9 +88,9 @@ public class PatientControllerTestIT {
     @Test
     @Order(5)
     void test_updatePatient() throws Exception {
-        Patient patient1 = new Patient(1L, "FamilyUpdated", "GivenUpdated", LocalDate.of(1989, 10, 18), 'M', "33 Rue Stertarlin", "456-321-789");
+        Patient patient1 = new Patient(3L, "FamilyUpdated", "GivenUpdated", LocalDate.of(1989, 10, 18), 'M', "33 Rue Stertarlin", "456-321-789");
         mockMvc
-                .perform(put("/patient/{id}", 1)
+                .perform(put("/patient/{id}", 3)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(patient1)))
                 .andExpect(status().isOk());

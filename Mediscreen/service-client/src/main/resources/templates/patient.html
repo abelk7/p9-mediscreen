@@ -13,6 +13,10 @@
                 <a class="nav-link active" th:href="@{/patient/}">Patients</a>
             </li>
         </ul>
+        <div>
+            <span th:text="${#authentication.getPrincipal().getUsername()}" style="color: white;font-weight: bold;"></span>
+            <a class="btn btn-danger" th:href="@{/logout}">Déconnexion</a>
+        </div>
     </div>
 </nav>
 <div class="container">
@@ -74,9 +78,8 @@
         <div class="card-footer mt-5">
             <div class="d-flex justify-content-between">
                 <div>
-                    <p class="mt-2 font-weight-bold" style="margin-left:-50px;"><strong>Notes</strong></p>
-                    <button class="btn btn-primary" id="toggleButton" type="button">Afficher/Masquer</button>
-                    <button class="btn btn-success" id="ajouterNoteButton" type="button">Ajouter</button>
+                    <button class="btn btn-primary" id="toggleButton" type="button">Afficher/Masquer Notes</button>
+                    <button class="btn btn-success" id="ajouterNoteButton" type="button">Ajouter Note</button>
                 </div>
                 <div>
 

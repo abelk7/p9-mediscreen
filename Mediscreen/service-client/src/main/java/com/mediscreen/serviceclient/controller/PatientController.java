@@ -30,6 +30,11 @@ public class PatientController {
         this.microserviceReportProxy = microserviceReportProxy;
     }
 
+    /**
+     * Get list if patients
+     * @param model
+     * @return
+     */
     @GetMapping({"/", "/patient/", "/list"})
     public ModelAndView index(ModelMap model) {
         List<Patient> patients = microservicePatientProxy.listPatients();
@@ -37,6 +42,12 @@ public class PatientController {
         return new ModelAndView("list", model);
     }
 
+    /**
+     * Get detail of patient
+     * @param model
+     * @param id id of patient
+     * @return
+     */
     @GetMapping(value = "/patient/{id}")
     public ModelAndView getPatient(ModelMap model, @PathVariable long id) {
         Patient patient = microservicePatientProxy.getPatient(id);
@@ -47,6 +58,11 @@ public class PatientController {
         return new ModelAndView("patient", model);
     }
 
+    /**
+     * get form post patient
+     * @param model
+     * @return
+     */
     @GetMapping(value = "/postPatient")
     public ModelAndView showFormPostPatient(ModelMap model) {
         Patient patient = new Patient();
@@ -54,6 +70,12 @@ public class PatientController {
         return new ModelAndView("post-patient", model);
     }
 
+    /**
+     * get form update patient
+     * @param model
+     * @param id id patient
+     * @return
+     */
     @GetMapping(value = "/patient/update/{id}")
     public ModelAndView showFormUpdatePatient(ModelMap model, @PathVariable long id) {
         Patient patient = microservicePatientProxy.getPatient(id);
@@ -61,11 +83,13 @@ public class PatientController {
         return new ModelAndView("update-patient", model);
     }
 
-//    @GetMapping(value = "/patient/note/{id}")
-//    public ModelAndView showFormNotePatient(ModelMap model, @PathVariable long id) {
-//        return new ModelAndView("note-patient", model);
-//    }
-
+    /**
+     * Save patient informations
+     * @param patientNewValues
+     * @param result
+     * @param model
+     * @return
+     */
     @PostMapping(value = "/patient/save")
     public ModelAndView savePatient(@Valid Patient patientNewValues, BindingResult result, ModelMap model) {
         if(patientNewValues.getId() == null) {
@@ -86,11 +110,27 @@ public class PatientController {
         return new ModelAndView("redirect:/list", model);
     }
 
+    /**
+     * Add note to patient
+     * @param newNote
+     * @param result
+     * @param model
+     * @return
+     */
     @PostMapping(value = "/note/save")
     public ModelAndView saveNotePatient(@Valid Note newNote, BindingResult result, ModelMap model) {
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Patient patient = microservicePatientProxy.getPatient( Long.parseLong(newNote.getPatId()));
         List<Note> notesList = microserviceNotesProxy.getListHistoryNoteOfPatient(newNote.getPatId());
+
+        if(result.hasErrors()) {
+            model.addAttribute("newNote", newNote);
+            model.addAttribute("patient", patient);
+            model.addAttribute("message", "La note ne peut pas être vide...");
+            return new  ModelAndView("redirect:/patient/"+patient.getId(), model);
+
+        }
 
         newNote.setDocteur(auth.getName());
         Note note = microserviceNotesProxy.saveNote(newNote);
@@ -107,7 +147,13 @@ public class PatientController {
         return new ModelAndView("redirect:/patient/"+patient.getId(), model);
     }
 
-    //TODO : Modifier Note
+
+    /**
+     * get form update note of patient
+     * @param model
+     * @param id
+     * @return
+     */
     @GetMapping(value = "/patient/note/{id}")
     public ModelAndView showFormUpdateNotePatient(ModelMap model, @PathVariable String id) {
         Note note = microserviceNotesProxy.findNoteById(id);
@@ -115,26 +161,12 @@ public class PatientController {
         return new ModelAndView("patient-note", model);
     }
 
-//    @PostMapping(value = "/note/update")
-//    public ModelAndView updateNotePatient(@Valid Note note, BindingResult result, ModelMap model) {
-//        Patient patient = microservicePatientProxy.getPatient( Long.parseLong(note.getPatId()));
-//        List<Note> notesList = microserviceNotesProxy.getListHistoryNoteOfPatient(note.getPatId());
-//        Note noteFound = microserviceNotesProxy.findNoteById(note.getId());
-//
-//        microserviceNotesProxy.saveNote(newNote);
-//
-//        model.addAttribute("patient", patient);
-//        model.addAttribute("notes", notesList);
-//        model.addAttribute("newNote", new Note(null,Long.toString(patient.getId()), patient.getFamily(), ""));
-//        model.addAttribute("message", "La note à été ajouté au patient");
-//        return new ModelAndView("redirect:/patient/"+patient.getId(), model);
-//    }
-
-//    @PutMapping(value = "/note/{id}")
-//    public ModelAndView updateNotePatient(@Valid Note note, BindingResult result, ModelMap model) {
-//
-//    }
-
+    /**
+     * Delete a patient
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping(value = "/patient/delete/{id}")
     public ModelAndView deletePatient(@PathVariable long id, ModelMap model) {
         microservicePatientProxy.deletePatient(id);
@@ -142,16 +174,22 @@ public class PatientController {
         return new ModelAndView("redirect:/list", model);
     }
 
+    /**
+     * Generate report diabete of patient
+     * @param patient
+     * @param model
+     * @return
+     */
     @PostMapping(value = "/probadiabete/patId")
     public ModelAndView determineProbaDiabete(Patient patient, ModelMap model) {
         String result = microserviceReportProxy.getRiskByPatientId(patient.getId().toString());
-        if(result.contains("None")) {
+        if(result.contains(" None")) {
             model.addAttribute("color", "green");
-        } else if(result.contains("Borderline")) {
+        } else if(result.contains(" Borderline")) {
             model.addAttribute("color", "blue");
-        } else if(result.contains("In Danger")) {
+        } else if(result.contains(" In Danger")) {
             model.addAttribute("color", "yellow");
-        } else if(result.contains("Early onset")) {
+        } else if(result.contains(" Early onset")) {
             model.addAttribute("color", "red");
         }
         model.addAttribute("analyse", result);

@@ -13,6 +13,10 @@
                 <a class="nav-link active" th:href="@{/patient/}">Patients</a>
             </li>
         </ul>
+        <div>
+            <span th:text="${#authentication.getPrincipal().getUsername()}" style="color: white;font-weight: bold;"></span>
+            <a class="btn btn-danger" th:href="@{/logout}">Déconnexion</a>
+        </div>
     </div>
 </nav>
 <div class="container">
@@ -20,6 +24,7 @@
         <h5 class="mt-3 ms-3">Modification de la note</h5>
         <div class="container mt-2">
             <form class="form_note" action="#" method="post" th:action="@{/note/save}" th:object="${note}">
+                <p th:errorclass="error" th:errors="*{note}" th:if="${#fields.hasErrors('note')}"></p>
                 <textarea th:field="*{note}" cols="109" rows="5" Placeholder="Veuillez saisir votre note ici..."></textarea>
                 <input type="hidden" th:field="*{id}" th:value="${note.id}">
                 <input type="hidden" th:field="*{patId}" th:value="${note.patId}">
