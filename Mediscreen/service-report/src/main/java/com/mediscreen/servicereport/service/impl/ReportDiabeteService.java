@@ -42,15 +42,15 @@ public class ReportDiabeteService implements IReportDiabeteService {
                 "Anticorps"
         ));
 
-//        Patient patient = getPatient(1L);
-//         String risk = determineRiskLevel(getOccurenceOfDechancheur(patient.getId().toString()), patient);
-//        System.out.println("---------RISK DETERMINED-----------");
-//        System.out.println("##### " + risk + " #####");
-//        System.out.println("-----------------------------------");
     }
 
+    /**
+     * Recherche des declencheur
+     * @param patId
+     * @return
+     */
     @Override
-    public Map<String, Integer> getOccurenceOfDechancheur(String patId) {
+    public Map<String, Integer> getOccurenceOfDeclencheur(String patId) {
         List<Note> noteList = noteRepository.findBySpecificPatId(patId);
         Map<String, Integer> mapOccurence = new HashMap<>();
 
@@ -70,6 +70,12 @@ public class ReportDiabeteService implements IReportDiabeteService {
         return mapOccurence;
     }
 
+    /**
+     * Dérminer le niveau du risque d'un patient à avoir le diabète
+     * @param mapDeclencheurs déclencheurs à rechercher chez le patient
+     * @param patient patient concerné
+     * @return
+     */
     @Override
     public String determineRiskLevel (Map<String, Integer> mapDeclencheurs, Patient patient) {
         //Si patient est homme et a moins de 30ans et a 5 term declencheurs
@@ -99,7 +105,7 @@ public class ReportDiabeteService implements IReportDiabeteService {
     }
 
 
-    private int ageOfPatient(Patient patient) {
+    public int ageOfPatient(Patient patient) {
         return Period.between(patient.getDob(), LocalDate.now()).getYears();
     }
 

@@ -18,6 +18,10 @@
                 <a class="nav-link active" th:href="@{/patient/}">Patients</a>
             </li>
         </ul>
+        <div>
+            <span th:text="${#authentication.getPrincipal().getUsername()}" style="color: white;font-weight: bold;"></span>
+            <a class="btn btn-danger" th:href="@{/logout}">Déconnexion</a>
+        </div>
     </div>
 </nav>
 <div class="container">

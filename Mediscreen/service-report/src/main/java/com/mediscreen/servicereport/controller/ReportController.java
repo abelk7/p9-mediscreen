@@ -23,7 +23,7 @@ public class ReportController {
     public String getRiskByPatientId(@RequestParam(name = "patId") String patId) {
         Patient patient = reportDiabeteService.getPatientByPatId(patId);
         if (patient != null) {
-            Map<String, Integer> mapTermesDeclencheurPatient = reportDiabeteService.getOccurenceOfDechancheur(patId);
+            Map<String, Integer> mapTermesDeclencheurPatient = reportDiabeteService.getOccurenceOfDeclencheur(patId);
             String riskLevel = reportDiabeteService.determineRiskLevel(mapTermesDeclencheurPatient, patient);
             return reportDiabeteService.generateReport(riskLevel, patient);
         }
@@ -36,7 +36,7 @@ public class ReportController {
     public String getRiskByPatientFamilyName(@RequestParam(name = "familyName") String familyName) {
         Patient patient = reportDiabeteService.getPatientByFamilyName(familyName);
         if (patient != null) {
-            Map<String, Integer> mapTermesDeclencheurPatient = reportDiabeteService.getOccurenceOfDechancheur(patient.getId().toString());
+            Map<String, Integer> mapTermesDeclencheurPatient = reportDiabeteService.getOccurenceOfDeclencheur(patient.getId().toString());
             String riskLevel = reportDiabeteService.determineRiskLevel(mapTermesDeclencheurPatient, patient);
             return reportDiabeteService.generateReport(riskLevel, patient);
         }

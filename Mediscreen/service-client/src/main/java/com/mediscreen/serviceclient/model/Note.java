@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @Getter
@@ -16,6 +17,7 @@ public class Note {
     private String id;
     private String patId;
     private String patient;
+    @NotEmpty(message = "Le note du patient ne peut pas être vide.")
     private String note;
     private String docteur;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
