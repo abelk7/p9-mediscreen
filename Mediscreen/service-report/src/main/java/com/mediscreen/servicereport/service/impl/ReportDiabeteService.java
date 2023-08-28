@@ -76,8 +76,8 @@ public class ReportDiabeteService implements IReportDiabeteService {
         //Si patient est femme et a moins de 30ans et a 7 term declencheurs
         //SI patient a plus de 30ans alors et a 8 term declencheurs
         if(patient.getSex() == 'M' && ageOfPatient(patient) < 30 && mapDeclencheurs.size() >= 5
-                || patient.getSex() == 'F' && ageOfPatient(patient) < 30 && mapDeclencheurs.size() >= 7
-                || ageOfPatient(patient) >= 30 && mapDeclencheurs.size() >= 8) {
+                || (patient.getSex() == 'F' && ageOfPatient(patient) < 30 && mapDeclencheurs.size() >= 7)
+                || (ageOfPatient(patient) >= 30 && mapDeclencheurs.size() >= 8)) {
             return "Early onset";
         }
 
@@ -85,8 +85,8 @@ public class ReportDiabeteService implements IReportDiabeteService {
         //Si le patient est une femme et a moins de 30ans et a 4 term declencheurs
         //Si le patient a plus de 30ans, il faut 6 term declencheurs
         if(patient.getSex() == 'M' && ageOfPatient(patient) < 30 && mapDeclencheurs.size() >= 3
-                || patient.getSex() == 'F' && ageOfPatient(patient) < 30 && mapDeclencheurs.size() >= 4
-                || ageOfPatient(patient) >= 30 && mapDeclencheurs.size() >= 6) {
+                || (patient.getSex() == 'F' && ageOfPatient(patient) < 30 && mapDeclencheurs.size() >= 4)
+                || (ageOfPatient(patient) >= 30 && mapDeclencheurs.size() >= 6)) {
             return "In Danger";
         }
 
@@ -106,19 +106,12 @@ public class ReportDiabeteService implements IReportDiabeteService {
     @Override
     public Patient getPatientByPatId(String patId) {
         Optional<Patient> patient = patientRepository.findById(Long.parseLong(patId));
-        if (patient.isPresent()) {
-            return patient.get();
-        }
-        return null;
+        return patient.orElse(null);
     }
 
     @Override
     public Patient getPatientByFamilyName(String familyName) {
-        Patient patient = patientRepository.findByFamilyName(familyName);
-        if (patient != null) {
-            return patient;
-        }
-        return null;
+        return patientRepository.findByFamilyName(familyName);
     }
 
     @Override

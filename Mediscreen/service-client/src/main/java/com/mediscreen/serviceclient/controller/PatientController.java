@@ -1,11 +1,10 @@
 package com.mediscreen.serviceclient.controller;
 
-import com.mediscreen.serviceclient.exception.PatientNotFoundException;
 import com.mediscreen.serviceclient.model.Note;
 import com.mediscreen.serviceclient.model.Patient;
 import com.mediscreen.serviceclient.proxies.MicroserviceNotesProxy;
 import com.mediscreen.serviceclient.proxies.MicroservicePatientProxy;
-import org.springframework.data.domain.Page;
+import com.mediscreen.serviceclient.proxies.MicroserviceReportProxy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -13,21 +12,22 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.thymeleaf.util.StringUtils;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class PatientController {
 
     private final MicroservicePatientProxy microservicePatientProxy;
     private  final MicroserviceNotesProxy microserviceNotesProxy;
+    private  final MicroserviceReportProxy microserviceReportProxy;
 
-    public PatientController(MicroservicePatientProxy microservicePatientProxy, MicroserviceNotesProxy microserviceNotesProxy) {
+    public PatientController(MicroservicePatientProxy microservicePatientProxy, MicroserviceNotesProxy microserviceNotesProxy, MicroserviceReportProxy microserviceReportProxy) {
         this.microservicePatientProxy = microservicePatientProxy;
         this.microserviceNotesProxy = microserviceNotesProxy;
+        this.microserviceReportProxy = microserviceReportProxy;
     }
 
     @GetMapping({"/", "/patient/", "/list"})
@@ -140,5 +140,21 @@ public class PatientController {
         microservicePatientProxy.deletePatient(id);
         model.addAttribute("message", "Le patient à été supprimé");
         return new ModelAndView("redirect:/list", model);
+    }
+
+    @PostMapping(value = "/probadiabete/patId")
+    public ModelAndView determineProbaDiabete(Patient patient, ModelMap model) {
+        String result = microserviceReportProxy.getRiskByPatientId(patient.getId().toString());
+        if(result.contains("None")) {
+            model.addAttribute("color", "green");
+        } else if(result.contains("Borderline")) {
+            model.addAttribute("color", "blue");
+        } else if(result.contains("In Danger")) {
+            model.addAttribute("color", "yellow");
+        } else if(result.contains("Early onset")) {
+            model.addAttribute("color", "red");
+        }
+        model.addAttribute("analyse", result);
+        return new ModelAndView("proba-diabete", model);
     }
 }

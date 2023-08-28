@@ -40,8 +40,8 @@ public class PatientServiceTestIT {
     @Test
     void test_savePatient() {
         Patient patient = new Patient();
-        patient.setFamily("Almiya");
-        patient.setGiven("Nadine");
+        patient.setLastName("Almiya");
+        patient.setFirstName("Nadine");
         patient.setDob(LocalDate.of(1987, 3, 25));
         patient.setSex('F');
         patient.setAddress("22 Rue South-Bisto");

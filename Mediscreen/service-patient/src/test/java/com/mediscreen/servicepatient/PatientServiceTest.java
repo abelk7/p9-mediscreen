@@ -42,16 +42,16 @@ public class PatientServiceTest {
         List<Patient> patientList = new ArrayList<>();
 
         Patient patient = new Patient();
-        patient.setFamily("Rho");
-        patient.setGiven("Jax");
+        patient.setLastName("Rho");
+        patient.setFirstName("Jax");
         patient.setDob(LocalDate.of(1999, 12, 25));
         patient.setSex('M');
         patient.setAddress("22 Rue South-Bisto");
         patient.setPhone("562-456-654");
 
         Patient patient2 = new Patient();
-        patient2.setFamily("Almiya");
-        patient2.setGiven("Nadine");
+        patient2.setLastName("Almiya");
+        patient2.setFirstName("Nadine");
         patient2.setDob(LocalDate.of(1987, 3, 25));
         patient2.setSex('F');
         patient2.setAddress("22 Rue South-Bisto");
@@ -73,8 +73,8 @@ public class PatientServiceTest {
     @Test
     void test_getPatient() {
         Patient patient = new Patient();
-        patient.setFamily("Rho");
-        patient.setGiven("Jax");
+        patient.setLastName("Rho");
+        patient.setFirstName("Jax");
         patient.setDob(LocalDate.of(1999, 12, 25));
         patient.setSex('M');
         patient.setAddress("22 Rue Henri Miller");
@@ -91,8 +91,8 @@ public class PatientServiceTest {
     @Test
     void test_savePatient() {
         Patient patient = new Patient();
-        patient.setFamily("Almiya");
-        patient.setGiven("Nadine");
+        patient.setLastName("Almiya");
+        patient.setFirstName("Nadine");
         patient.setDob(LocalDate.of(1987, 3, 25));
         patient.setSex('F');
         patient.setAddress("22 Rue South-Bisto");
