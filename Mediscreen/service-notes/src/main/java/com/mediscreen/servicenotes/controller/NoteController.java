@@ -21,14 +21,14 @@ import java.util.List;
 public class NoteController {
 
     private final INoteService noteService;
-    private NoteRepository noteRepository;
 
-    @GetMapping(value = "/notes/")
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public List<Note> getNotes() {
-        return noteService.findAll();
-    }
+      //unused
+//    @GetMapping(value = "/notes/")
+//    @ResponseStatus(HttpStatus.OK)
+//    @ResponseBody
+//    public List<Note> getNotes() {
+//        return noteService.findAll();
+//    }
 
     @GetMapping(value = "/notes/{patId}")
     @ResponseStatus(HttpStatus.OK)
@@ -40,8 +40,12 @@ public class NoteController {
     @GetMapping(value = "/note/{id}")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Note getSpecificNote(@PathVariable String id){
-        return noteService.findNoteById(id);
+    public ResponseEntity<Note> getSpecificNote(@PathVariable String id) {
+        Note note = noteService.findNoteById(id);
+        if(note == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(note, HttpStatus.OK);
     }
 
 
