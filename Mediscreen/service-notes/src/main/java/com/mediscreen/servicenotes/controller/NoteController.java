@@ -22,13 +22,12 @@ public class NoteController {
 
     private final INoteService noteService;
 
-      //unused
-//    @GetMapping(value = "/notes/")
-//    @ResponseStatus(HttpStatus.OK)
-//    @ResponseBody
-//    public List<Note> getNotes() {
-//        return noteService.findAll();
-//    }
+    @GetMapping(value = "/notes/")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public List<Note> getNotes() {
+        return noteService.findAll();
+    }
 
     @GetMapping(value = "/notes/{patId}")
     @ResponseStatus(HttpStatus.OK)

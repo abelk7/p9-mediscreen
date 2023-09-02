@@ -39,7 +39,6 @@ services:
       - "SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/mediscreen-patients?createDatabaseIfNotExist=true&serverTimezone=UTC"
       - "SPRING_DATABASE_PORT: 3306"
       - "SLEEP_LENGTH=5"
-#      - "SPRING_DATASOURCE_URL=jdbc:mysql://mysql/mediscreen-patients?createDatabaseIfNotExist=true"
     ports:
       - "8081:8081"
     restart: on-failure
