@@ -80,7 +80,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - microservices-networks
+      - microservices-network
 
 networks:
   microservices-network:
