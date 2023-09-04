@@ -5,7 +5,7 @@ services:
     image: mysql
     container_name: mysql_container
     volumes:
-      - /var/lib/mysql
+      - db_mysql_data:/var/lib/mysql
     ports:
       - "3307:3306"
     environment:
@@ -20,7 +20,7 @@ services:
     image: mongo:7 #:7.0.0
     container_name: mongodb_container
     volumes:
-      - /data/db
+      - db_mongo_data:/data/db
     ports:
       - "27017:27017"
     restart: on-failure
@@ -80,8 +80,12 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - microservices-network
+      - microservices-networks
 
 networks:
   microservices-network:
     driver: bridge
+
+volumes:
+  db_mysql_data:
+  db_mongo_data:
